@@ -1,0 +1,15 @@
+---
+- name: Set dotfiles path
+  set_fact:
+    dotfiles_path: "{{ ansible_env.HOME }}/dotfiles"
+  changed_when: False
+
+- name: Clone repo
+  ansible.builtin.git:
+    repo: https://github.com/cam-ball/dotfiles.git
+    dest: "{{ dotfiles_path }}"
+    version: main
+    accept_hostkey: yes
+
+- name: Run install script
+  ansible.builtin.script: "{{ dotfiles_path }}/setup"

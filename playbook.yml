@@ -1,0 +1,18 @@
+- hosts: localhost
+  tasks:
+  - name: Install packages
+    ansible.builtin.apt:
+      name: "{{ packages }}"
+      state: present
+    become: true
+    vars:
+      packages:
+      - git
+      - tmux
+
+  - import_tasks: zsh.yml 
+
+  - import_tasks: dotfiles.yml 
+
+  - import_tasks: neovim.yml 
+

@@ -1,0 +1,31 @@
+---
+- name: Install Zsh
+  become: true
+  ansible.builtin.apt:
+    state: present
+    pkg:
+      - zsh
+
+- name: Set ohmyzsh install path
+  set_fact:
+    ohmyzsh_install: "{{ ansible_env.HOME }}/install.sh"
+  changed_when: False
+
+- name: Download ohmyzsh
+  ansible.builtin.get_url:
+    url: "https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh"
+    dest: "{{ ohmyzsh_install }}"
+  changed_when: False
+
+- name: Install ohmyzsh
+  ansible.builtin.script: "{{ ohmyzsh_install }}"
+  changed_when: False
+
+- name: Remove install file
+  ansible.builtin.file: 
+    path: "{{ ohmyzsh_install }}"
+    state: absent
+  changed_when: False
+
+- name: Update ohmyzsh
+  shell: "zsh -c 'source {{ ansible_env.HOME }}/.oh-my-zsh/oh-my-zsh.sh && omz update'"

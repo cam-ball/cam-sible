@@ -1,0 +1,31 @@
+---
+- name: Install Neovim and cetera
+  become: true
+  ansible.builtin.apt:
+    name: "{{ packages }}"
+    state: present
+  vars:
+    packages:
+    - neovim
+    - fzf
+    - ripgrep
+
+- name: Set vim-plug location
+  set_fact:
+    vimplug_location: "{{ ansible_env.HOME }}/.local/share/nvim/site/autoload"
+  changed_when: False
+
+- name: Create nvim plugin file
+  ansible.builtin.file: 
+    path: "{{ vimplug_location }}"
+    state: directory
+  changed_when: False
+
+- name: Install vim-plug
+  ansible.builtin.get_url: 
+    url: "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
+    dest: "{{ vimplug_location }}/plug.vim"
+
+- name: Run PlugInstall
+  script: "/usr/bin/nvim +'PlugInstall --sync' +qa"
+
