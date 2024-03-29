@@ -16,5 +16,6 @@
     dest: "{{ tpm_path }}"
     version: master
 
-- name: Install tmux plugins
-  ansible.builtin.script: "{{ tpm_path }}/bin/install_plugins"
+  # TODO: this isn't working, needs investigation
+  # - name: Install tmux plugins
+    # ansible.builtin.script: "{{ tpm_path }}/bin/install_plugins"
