@@ -1,0 +1,27 @@
+- name: Tempfile for fonts
+  register: font_tempfile
+  ansible.builtin.tempfile:
+    state: directory
+    prefix: fonts
+  changed_when: False
+
+- name: Download and unarchive font
+  ansible.builtin.unarchive:  
+    src: "https://download.jetbrains.com/fonts/JetBrainsMono-2.304.zip"
+    dest: "{{ font_tempfile.path }}"  
+    remote_src: yes  
+
+- name: Copy to font file
+  ansible.builtin.copy:
+    src: "{{ font_tempfile.path }}"
+    dest: "{{ ansible_env.HOME }}/.local/share/fonts/"
+
+- name: Delete tempfiles
+  ansible.builtin.file:
+    path: "{{ font_tempfile.path }}"
+    state: absent
+  changed_when: False
+
+- name: Update fc-cache
+  command:
+    cmd: fc-cache -f -v
