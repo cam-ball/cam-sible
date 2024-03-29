@@ -11,14 +11,22 @@
     ohmyzsh_install: "{{ ansible_env.HOME }}/install.sh"
   changed_when: False
 
+- name: Check ohmyzsh install
+  register: ohmyzsh_installed
+  ansible.builtin.stat:
+    path: "{{ ohmyzsh_install }}"
+  changed_when: False
+
 - name: Download ohmyzsh
   ansible.builtin.get_url:
     url: "https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh"
     dest: "{{ ohmyzsh_install }}"
+  when: not ohmyzsh_installed.stat.exists
   changed_when: False
 
 - name: Install ohmyzsh
   ansible.builtin.script: "{{ ohmyzsh_install }}"
+  when: not ohmyzsh_installed.stat.exists
   changed_when: False
 
 - name: Remove install file
