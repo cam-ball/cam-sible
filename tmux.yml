@@ -1,0 +1,20 @@
+---
+- name: Install Tmux
+  become: true
+  ansible.builtin.apt:
+    state: present
+    pkg:
+      - zsh
+
+- name: Set tpm path
+  set_fact:
+    tpm_path: "{{ ansible_env.HOME }}/.tmux/plugins/tpm"
+
+- name: Clone tpm
+  ansible.builtin.git:
+    repo: https://github.com/tmux-plugins/tpm
+    dest: "{{ tpm_path }}"
+    version: master
+
+- name: Install tmux plugins
+  ansible.builtin.script: "{{ tpm_path }}/bin/install_plugins"
