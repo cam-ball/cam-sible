@@ -13,10 +13,12 @@
 - additional package managers (flatpak and snap, at least)
 - support for non-debian based systems
 - **idempotency**
-- asdf
-- gh cli
-- docker
-- jq?
+- dependencies
+  - curl
+  - asdf
+  - gh cli
+  - docker
+  - jq?
 - non-dev apps
   - firefox
   - discord
