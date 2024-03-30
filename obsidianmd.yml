@@ -1,4 +1,11 @@
 ---
+- name: Install FUSE
+  become: true
+  ansible.builtin.apt:
+    state: present
+    pkg:
+      - fuse
+
 - name: Get latest obsidian release
   register: obsidian_latest
   script: >
