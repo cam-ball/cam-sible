@@ -18,3 +18,11 @@
   - import_tasks: tmux.yml 
   
   - import_tasks: fonts.yml
+
+  - import_tasks: obsidianmd.yml
+
+- post_tasks:
+  - name: Post install warning
+    debug:
+      msg: >
+        In order to complete setup, clone https://github.com/cam-ball/mind-palace to ~/Documents

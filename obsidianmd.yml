@@ -1,0 +1,21 @@
+---
+- name: Get latest obsidian release
+  register: obsidian_latest
+  script: >
+    /usr/bin/wget -q -O - https://api.github.com/repos/obsidianmd/obsidian-releases/releases/latest 
+    | grep 'AppImage"$' 
+    | grep -v 'arm64' 
+    | awk -F'"' ' {print $4} '
+
+- name: Download latest obsidian
+  ansible.builtin.get_url: 
+    url: "{{ obsidian_latest.stdout }}"
+    dest: "{{ ansible_env.HOME }}/bin/obsidian.AppImage"
+    mode: "777"
+
+- name: Schedule obsidian syncing
+  ansible.builtin.cron:
+    name: "sync obsidian"
+    minute: "0"
+    hour: "*"
+    job: "{{ ansible_env.HOME }}/bin/sync_obsidian"
