@@ -12,8 +12,10 @@
 - optionally clone obsidian vault if github authentication is all set
 - additional package managers (flatpak and snap, at least)
 - support for non-debian based systems
+- **idempotency**
 - asdf
 - gh cli
+- docker
 - jq?
 - non-dev apps
   - firefox
