@@ -21,7 +21,7 @@
 
   - import_tasks: obsidianmd.yml
 
-- post_tasks:
+  post_tasks:
   - name: Post install warning
     debug:
       msg: >
