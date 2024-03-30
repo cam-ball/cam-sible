@@ -4,7 +4,7 @@
   ansible.builtin.apt:
     state: present
     pkg:
-      - zsh
+      - tmux
 
 - name: Set tpm path
   set_fact:
